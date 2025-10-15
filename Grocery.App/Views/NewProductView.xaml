@@ -24,9 +24,10 @@
                         Format="dd-MM-yyyy" />
 
             <Label Text="Prijs (€)" FontAttributes="Bold" />
-            <Entry Text="{Binding Price}" 
-                   Placeholder="Bijv. 2.99"
-                   Keyboard="Numeric" />
+            <Entry Text="{Binding PriceText}"
+                   Placeholder="Bijv. 2,99"
+                   Keyboard="Text"
+                   MaxLength="12" />
 
             <Label Text="{Binding ErrorMessage}" 
                    TextColor="Red"

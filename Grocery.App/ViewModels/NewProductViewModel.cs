@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Grocery.Core.Interfaces.Services;
 using Grocery.Core.Models;
+using System.Globalization;
 
 namespace Grocery.App.ViewModels
 {
@@ -20,6 +21,9 @@ namespace Grocery.App.ViewModels
 
         [ObservableProperty]
         private decimal price = 0.00m;
+
+        [ObservableProperty]
+        private string priceText = string.Empty;
 
         [ObservableProperty]
         private string errorMessage = string.Empty;
@@ -52,11 +56,20 @@ namespace Grocery.App.ViewModels
                     return;
                 }
 
-                if (Price < 0)
+                var raw = (PriceText ?? string.Empty).Trim();
+
+                if (!decimal.TryParse(raw.Replace(',', '.'), NumberStyles.Number, CultureInfo.InvariantCulture, out var parsed))
+                {
+                    ShowError("Ongeldige prijs. Gebruik bijvoorbeeld 2,99 of 2.99.");
+                    return;
+                }
+                if (parsed < 0)
                 {
                     ShowError("Prijs kan niet negatief zijn.");
                     return;
                 }
+
+                Price = decimal.Round(parsed, 2);
 
                 if (ShelfLife.Date < DateTime.Now.Date)
                 {
