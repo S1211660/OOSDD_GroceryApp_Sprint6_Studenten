@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:Grocery.App.ViewModels"
+             x:Class="Grocery.App.Views.NewProductView"
+             x:DataType="viewmodel:NewProductViewModel"
+             Title="Nieuw Product">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Productnaam" FontAttributes="Bold" />
+            <Entry Text="{Binding Name}" 
+                   Placeholder="Bijv. Melk"
+                   MaxLength="80" />
+
+            <Label Text="Voorraad" FontAttributes="Bold" />
+            <Entry Text="{Binding Stock}" 
+                   Placeholder="Bijv. 100"
+                   Keyboard="Numeric" />
+
+            <Label Text="THT Datum" FontAttributes="Bold" />
+            <DatePicker Date="{Binding ShelfLife}"
+                        Format="dd-MM-yyyy" />
+
+            <Label Text="Prijs (€)" FontAttributes="Bold" />
+            <Entry Text="{Binding Price}" 
+                   Placeholder="Bijv. 2.99"
+                   Keyboard="Numeric" />
+
+            <Label Text="{Binding ErrorMessage}" 
+                   TextColor="Red"
+                   IsVisible="{Binding HasError}"
+                   FontAttributes="Bold" />
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">
+                <Button Text="Annuleren"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="Gray"
+                        TextColor="White"
+                        Grid.Column="0" />
+
+                <Button Text="Opslaan"
+                        Command="{Binding SaveProductCommand}"
+                        BackgroundColor="Green"
+                        TextColor="White"
+                        Grid.Column="1" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
