@@ -20,17 +20,38 @@ namespace Grocery.Core.Services
 
         public Product Add(Product item)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(item.Name))
+            {
+                throw new ArgumentException("Productnaam mag niet leeg zijn.");
+            }
+
+            if (item.Stock < 0)
+            {
+                throw new ArgumentException("Voorraad kan niet negatief zijn.");
+            }
+
+            if (item.Price < 0)
+            {
+                throw new ArgumentException("Prijs kan niet negatief zijn.");
+            }
+
+            if (item.ShelfLife < DateOnly.FromDateTime(DateTime.Now))
+            {
+                throw new ArgumentException("THT datum mag niet in het verleden liggen.");
+            }
+
+            // Product toevoegen via repository
+            return _productRepository.Add(item);
         }
 
         public Product? Delete(Product item)
         {
-            throw new NotImplementedException();
+            return _productRepository.Delete(item);
         }
 
         public Product? Get(int id)
         {
-            throw new NotImplementedException();
+            return _productRepository.Get(id);
         }
 
         public Product? Update(Product item)
